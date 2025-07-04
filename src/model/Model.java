@@ -30,14 +30,13 @@ public class Model {
 			}else {
 				highVisionLilst.add(p);
 			}
-			
 		}
 		
 		if(o) {
 			return lowVisionList;
-		}else {
-			return highVisionLilst;
 		}
+		
+		return highVisionLilst;
 		
 	}
 
