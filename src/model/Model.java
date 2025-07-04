@@ -14,8 +14,9 @@ public class Model {
 		return model;
 	}
 	
-	public static List<Person> getVision(boolean o) {
+	public static List<Person>[] getVision(boolean o) {
 		Person [] student = db.getStudents();
+		List[] visionList = new List[2];
 		List<Person> lowVisionList = new LinkedList<>();
 		List<Person> highVisionLilst = new LinkedList<>();
 		
@@ -26,12 +27,11 @@ public class Model {
 				highVisionLilst.add(p);
 			}
 		}
+		visionList[0] = lowVisionList;
+		visionList[1] = highVisionLilst;
+
 		
-		if(o) {
-			return lowVisionList;
-		}
-		
-		return highVisionLilst;
+		return visionList;
 		
 	}
 

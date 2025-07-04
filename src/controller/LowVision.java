@@ -21,13 +21,13 @@ public class LowVision {
                 seat[row][1] = p2;
                 
                 lowVisionList.remove(0);
-                lowVisionList.remove(1);
+                lowVisionList.remove(0);
                 
                 row++;
 	        }}
-	 
-	    seat[row][0] = lowVisionList.get(0);
-	    if(!lowVisionList.isEmpty()) {
+	    seat[row][0] = lowVisionList.remove(0);
+
+	    if(lowVisionList.size() == 1) {
 	    	seat[row][1] = lowVisionList.get(0);
 	    }
 	    

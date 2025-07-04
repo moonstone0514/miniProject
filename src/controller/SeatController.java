@@ -13,19 +13,27 @@ public class SeatController {
     }
 	
 	public static String[] pickBestPairFromGoodVision(List<Person> goodVisionList) {
-	    Collections.shuffle(goodVisionList, new Random());
-	    
-	    String[] lastSeat = new String[2];
-	    
-	    Person p1 = goodVisionList.get(0);
-        Person p2 = goodVisionList.get(1);
-        if (MbtiCheck.isMatched(p1.getMbti(), p2.getMbti())) {
-        	lastSeat[0] = p1.getName();
-        	lastSeat[1] = p2.getName();
-        }
-        
+		 String[] lastSeat = new String[2];
+		 
+
+		while(true){
+			Collections.shuffle(goodVisionList, new Random());
+		    
+		   
+		    
+		    Person p1 = goodVisionList.get(0);
+	        Person p2 = goodVisionList.get(1);
+	        
+	        if (MbtiCheck.isMatched(p1.getMbti(), p2.getMbti())) {
+	        	lastSeat[0] = p1.getName();
+	        	lastSeat[1] = p2.getName();
+	        	break;
+	        	
+	        }
+		}
+		
         goodVisionList.remove(0);
-        goodVisionList.remove(1);
+        goodVisionList.remove(0);
         
 	    return lastSeat;
 	}
@@ -41,21 +49,28 @@ public class SeatController {
 
 	            if (j == 0) {
 	                Collections.shuffle(remainingList, rand);
+	                System.out.println(remainingList.size() + ":::사이드");
 	                seat[i][j] = remainingList.remove(0);
 	            } else {
 	                Person left = seat[i][j-1];
 	                Collections.shuffle(remainingList, rand);
+	                System.out.println(remainingList.size() + ":::가운데");
+
 	                Person matched = null;
-	                for (Person candidate : remainingList) {
+	                int tmp = 0;
+	                for (int index = 0 ; index < remainingList.size() ; index++) {
+	                	Person candidate = remainingList.get(index);
 	                    if (MbtiCheck.isMatched(left.getMbti(), candidate.getMbti())) {
 	                        matched = candidate;
+	                        tmp = index;
 	                        break;
 	                    }
 	                }
 	                if (matched != null) {
 	                    seat[i][j] = matched;
-	                    remainingList.remove(matched);
+	                    remainingList.remove(tmp);
 	                } else {
+	                	System.out.println(remainingList.size());
 	                    seat[i][j] = remainingList.remove(0);
 	                }
 	            }
