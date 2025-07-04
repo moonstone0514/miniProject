@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.*;
+
 import model.domain.Person;
 
 public class SeatController {
