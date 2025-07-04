@@ -31,13 +31,29 @@ public class StartView {
 		System.out.println("getVision: " + lowvision.get(0).getName());
 		System.out.println("좌석 배정: " + seat[0][0].getName());//시력 안 좋은 사람
 		
-
-		SeatController.pickBestPairFromGoodVision(highvision);//두 사람
-		System.out.println(SeatController.pickBestPairFromGoodVision(highvision)[0]+SeatController.pickBestPairFromGoodVision(highvision)[1]);
+		System.out.println(highvision.size() + "::");
+		String[] finals = SeatController.pickBestPairFromGoodVision(highvision);//두 사람
+		//System.out.println(SeatController.pickBestPairFromGoodVision(highvision)[0]+SeatController.pickBestPairFromGoodVision(highvision)[1]);
+		System.out.println(highvision.size() + ":");
 		
 		SeatController.assignSeatWithMbti(seat, highvision);
 		System.out.println(seat[3][3]);
 		
+		System.out.println("===== 최종 좌석 배정 결과 =====");
+		for (int row = 0; row < seat.length; row++) {
+		    System.out.print("Row " + row + ": ");
+		    for (int col = 0; col < seat[row].length; col++) {
+		        if (seat[row][col] != null) {
+		            System.out.print(seat[row][col].getName() + " ");
+		        } else {
+		            System.out.print("[빈자리] ");
+		        }
+		    }
+		    System.out.println(); // 줄바꿈
+		    
+		}
+		System.out.println("Row 7: " + finals[0] + " " + finals[1]);
+
 		
 	}
 

@@ -8,6 +8,19 @@ public class SeatController {
 	
 	//두명 미리 뽑아서 다른 배열에 넣기
 	
+	public static int getIndex(Person p, List<Person> list) {
+		int i=0;
+		for(Person tmp : list){
+			if(tmp.getName() == p.getName()) {
+				break;
+			}else {
+				i++;
+			}
+		}
+		return i;
+		
+	}
+	
 	public static Person[][] createSeatArray() {
         return new Person[7][4];
     }
@@ -27,6 +40,7 @@ public class SeatController {
 	        if (MbtiCheck.isMatched(p1.getMbti(), p2.getMbti())) {
 	        	lastSeat[0] = p1.getName();
 	        	lastSeat[1] = p2.getName();
+	        	System.out.println(goodVisionList.size());
 	        	break;
 	        	
 	        }
@@ -39,6 +53,8 @@ public class SeatController {
 	}
 	
 	public static void assignSeatWithMbti(Person[][] seat, List<Person> remainingList) {
+        System.out.println(remainingList.size()+"22");
+
 	    Random rand = new Random();
 	    int rows = seat.length;   // 7
 	    int cols = seat[0].length; // 4
@@ -49,12 +65,12 @@ public class SeatController {
 
 	            if (j == 0) {
 	                Collections.shuffle(remainingList, rand);
-	                System.out.println(remainingList.size() + ":::사이드");
-	                seat[i][j] = remainingList.remove(0);
+	                seat[i][j] = remainingList.get(0);
+	                System.out.println(remainingList.size()+"dadfadf");
+	                remainingList.remove(0);
 	            } else {
 	                Person left = seat[i][j-1];
 	                Collections.shuffle(remainingList, rand);
-	                System.out.println(remainingList.size() + ":::가운데");
 
 	                Person matched = null;
 	                int tmp = 0;
@@ -68,10 +84,12 @@ public class SeatController {
 	                }
 	                if (matched != null) {
 	                    seat[i][j] = matched;
-	                    remainingList.remove(tmp);
+	                    int matchedIndex = getIndex(matched, remainingList);
+	                    remainingList.remove(matchedIndex);
 	                } else {
 	                	System.out.println(remainingList.size());
-	                    seat[i][j] = remainingList.remove(0);
+	                    seat[i][j] = remainingList.get(0);
+	                    remainingList.remove(0);
 	                }
 	            }
 	        }
