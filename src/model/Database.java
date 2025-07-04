@@ -115,5 +115,9 @@ public class Database {
         return student;
     }
     
+    public static Map<String, List<String>> getMbti(){
+    	return mbtiMap;
+    }
+    
     
 }
