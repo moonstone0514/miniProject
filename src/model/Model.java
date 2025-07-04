@@ -13,11 +13,6 @@ public class Model {
 	public static Model getModel() {
 		return model;
 	}
-
-	public static Object getVision() {
-		return true;
-	}
-
 	
 	public static List<Person> getVision(boolean o) {
 		Person [] student = db.getStudents();
