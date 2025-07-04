@@ -26,9 +26,9 @@ public class LowVision {
                 row++;
 	        }}
 	 
-	    seat[row][0] = lowVisionList.get(0);
+	    seat[row][0] = lowVisionList.remove(0);
 	    if(!lowVisionList.isEmpty()) {
-	    	seat[row][1] = lowVisionList.get(1);
+	    	seat[row][1] = lowVisionList.remove(1);
 	    }
 	    
 	    
