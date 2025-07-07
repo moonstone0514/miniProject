@@ -65,7 +65,7 @@ public class SeatController {
 	}
 
 	public static boolean checkMbti(String a, String b) {
-		return Database.getmbti().getOrDefault(a, Collections.emptyList()).contains(b);
+		return Database.getMbti().getOrDefault(a, Collections.emptyList()).contains(b);
 	}
 	// 배열: 8행 4열
 	// 시력 안 좋은 사람 먼저 배정
