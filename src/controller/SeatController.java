@@ -1,99 +1,70 @@
 package controller;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
-import model.domain.Person;
+import model.Database;
+import model.Model;
+import model.domain.*;
 
 public class SeatController {
-	
-	//두명 미리 뽑아서 다른 배열에 넣기
-	
-	public static int getIndex(Person p, List<Person> list) {
-		int i=0;
-		for(Person tmp : list){
-			if(tmp.getName() == p.getName()) {
-				break;
-			}else {
-				i++;
+	public static Person[][] assignSeatWithMbti() {
+		Person[][] seat = new Person[8][4];
+
+		List[] visionList = Model.getVision();
+		List<Person> lowVisionList = visionList[0];
+		List<Person> highVisionList = visionList[1];
+
+		Collections.shuffle(lowVisionList, new Random());
+		Collections.shuffle(highVisionList, new Random());
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (lowVisionList.isEmpty() && highVisionList.isEmpty()) {
+					return seat;
+				}
+
+				if (j == 0) { //시력 좋은 사람 배치
+					seat[i][j] = highVisionList.remove(0);
+					continue;
+				}
+				
+				if (lowVisionList.isEmpty()) { // 시력 좋은 사람 배치
+					seat[i][j]=assignHighVsion(seat[i][j-1], highVisionList);
+					continue;
+				} else { // 시력 안 좋은 사람 배치
+					seat[i][j]=assignLowVsion(seat[i][j-1], lowVisionList);
+					continue;
+				}
 			}
 		}
-		return i;
-		
+		return seat;
 	}
-	
-	public static Person[][] createSeatArray() {
-        return new Person[7][4];
-    }
-	
-	public static String[] pickBestPairFromGoodVision(List<Person> goodVisionList) {
-		 String[] lastSeat = new String[2];
-		 
 
-		while(true){
-			Collections.shuffle(goodVisionList, new Random());
-		    
-		   
-		    
-		    Person p1 = goodVisionList.get(0);
-	        Person p2 = goodVisionList.get(1);
-	        
-	        if (MbtiCheck.isMatched(p1.getMbti(), p2.getMbti())) {
-	        	lastSeat[0] = p1.getName();
-	        	lastSeat[1] = p2.getName();
-	        	System.out.println(goodVisionList.size());
-	        	break;
-	        	
-	        }
+	public static Person assignHighVsion(Person p, List<Person> highVisionList) {
+		for (int i = 0; i < highVisionList.size(); i++) {
+			if (checkMbti(p.getMbti(), highVisionList.get(i).getMbti())) {
+				return highVisionList.remove(i);
+			}
 		}
-		
-        goodVisionList.remove(0);
-        goodVisionList.remove(0);
-        
-	    return lastSeat;
-	}
-	
-	public static void assignSeatWithMbti(Person[][] seat, List<Person> remainingList) {
-        System.out.println(remainingList.size()+"22");
-
-	    Random rand = new Random();
-	    int rows = seat.length;   // 7
-	    int cols = seat[0].length; // 4
-
-	    for (int i = 0; i < rows; i++) {
-	        for (int j = 0; j < cols; j++) {
-	            if ((i <= 3) && (j <= 1)) continue;
-
-	            if (j == 0) {
-	                Collections.shuffle(remainingList, rand);
-	                seat[i][j] = remainingList.get(0);
-	                System.out.println(remainingList.size()+"dadfadf");
-	                remainingList.remove(0);
-	            } else {
-	                Person left = seat[i][j-1];
-	                Collections.shuffle(remainingList, rand);
-
-	                Person matched = null;
-	                int tmp = 0;
-	                for (int index = 0 ; index < remainingList.size() ; index++) {
-	                	Person candidate = remainingList.get(index);
-	                    if (MbtiCheck.isMatched(left.getMbti(), candidate.getMbti())) {
-	                        matched = candidate;
-	                        tmp = index;
-	                        break;
-	                    }
-	                }
-	                if (matched != null) {
-	                    seat[i][j] = matched;
-	                    int matchedIndex = getIndex(matched, remainingList);
-	                    remainingList.remove(matchedIndex);
-	                } else {
-	                	System.out.println(remainingList.size());
-	                    seat[i][j] = remainingList.get(0);
-	                    remainingList.remove(0);
-	                }
-	            }
-	        }
-	    }
+		return highVisionList.remove(0);
 	}
 
+	public static Person assignLowVsion(Person p, List<Person> lowVisionList) {
+		for (int i = 0; i < lowVisionList.size(); i++) {
+			if (checkMbti(p.getMbti(), lowVisionList.get(i).getMbti())) {
+				return lowVisionList.remove(i);
+			}
+		}
+		return lowVisionList.remove(0);
+	}
+
+	public static boolean checkMbti(String a, String b) {
+		return Database.getmbti().getOrDefault(a, Collections.emptyList()).contains(b);
+	}
+	// 배열: 8행 4열
+	// 시력 안 좋은 사람 먼저 배정
+	// 시력 안 좋은 사람 없으면 좋은 사람 배정
+	// 단 맨 끝 자리는 무조건 시력 좋은 사람만 배정 + 맨 끝에 앉았던 사람은 제외
 }

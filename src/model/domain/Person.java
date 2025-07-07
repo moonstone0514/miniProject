@@ -7,12 +7,11 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
-
+@Setter
 public class Person {
-    private String name;
-    private String mbti;
-    private boolean isLowVision;
-    private boolean isSide;
+	private String name;
+	private String mbti;
+	private boolean hasLowVision;
+	private boolean OnSide;
 }
