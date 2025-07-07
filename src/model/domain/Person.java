@@ -1,19 +1,19 @@
 package model.domain;
 
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
+@Getter
+
 public class Person {
 	
-	private String name;
-	private String mbti;
-	private boolean hasLowVision;
-	private boolean onSide;
-	
+    private String name;
+    private String mbti;
+    private boolean isLowVision;
+    
 }

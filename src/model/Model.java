@@ -23,7 +23,7 @@ public class Model {
 		List<Person> highVisionList = new LinkedList<>();
 
 		for (Person p : students) {
-			if (p.isHasLowVision()) {
+			if (p.isLowVision()) {
 				lowVisionList.add(p);
 			} else {
 				highVisionList.add(p);
