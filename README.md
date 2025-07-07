@@ -120,7 +120,9 @@
 - 가변적이며 객체 타입만 저장 가능한 List 사용
 - 시력이 나쁜 학생과 좋은 학생들의 list를 따로 생성해 알고리즘 구현
 - Collections.shuffle()메서드 사용하여 랜덤 배치 구현
+  
 ![alt](./images/list01.png)
+  
 ![alt](./images/list02.png)
 
 ### 🔸 Git & 협업
