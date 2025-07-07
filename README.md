@@ -73,6 +73,8 @@
 
 ## 📁 디렉토리 구조
 
+
+```
 📦src
  ┣ 📂controller
  ┃ ┣ 📜.gitignore
@@ -89,6 +91,7 @@
  ┣ 📂view
  ┃ ┣ 📜StartView.java
  ┗ ┗ 📜SuccessView.java
+```
 
 
 ---
@@ -107,6 +110,8 @@
 ### 🔸 Lombok
 - Person객체에 NoArgsConstructor, AllArgsConstructor, Setter, Getter 사용
 - 코드의 간결성, 생상성 향상 및 코드 가독성 증가
+
+  
 ![alt](./images/lombok.png)
 
 ### 🔸 배열
