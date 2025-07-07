@@ -100,29 +100,28 @@
 ### 🔸 static{}
 - 각 Controller의 메서드, Database 생성시 static 사용
 - Database 메모리 공유 가능, 빠른 접근성
-(./images/static01.png)
-(./images/static02.png)
+![alt](./images/static01.png)
+![alt](./images/static02.png)
+
 
 ### 🔸 Lombok
 - Person객체에 NoArgsConstructor, AllArgsConstructor, Setter, Getter 사용
 - 코드의 간결성, 생상성 향상 및 코드 가독성 증가
-(./images/lombok.png)
+![alt](./images/lombok.png)
 
 ### 🔸 배열
 - 인덱스와 length를 통해 좌석 배치 및 알고리즘 제어
-(./images/array.png)
+![alt](./images/array.png)
 
 ### 🔸 예외처리
 - catch-try 블록을 통해 좌석이 비었을 경우 에러메세지 출력
-(./images/exception01.png)
-(./images/exception02.png)
 
 ### 🔸 ArrayList
 - 가변적이며 객체 타입만 저장 가능한 List 사용
 - 시력이 나쁜 학생과 좋은 학생들의 list를 따로 생성해 알고리즘 구현
 - Collections.shuffle()메서드 사용하여 랜덤 배치 구현
-(./images/list01.png)
-(./images/list02.png)
+![alt](./images/list01.png)
+![alt](./images/list02.png)
 
 ### 🔸 Git & 협업
 - 팀원 간 역할 분담 및 GitHub 기반 협업
