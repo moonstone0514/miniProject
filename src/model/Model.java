@@ -2,11 +2,11 @@ package model;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import model.domain.Person;
 
 public class Model {
 	
-
 	private static Model model = new Model();
 	
 	private Model (){};
@@ -15,9 +15,9 @@ public class Model {
 		return model;
 	}
 
-	public static List[] getVision() {
+	public List<Person>[] getVision() {
 		Person[] students = Database.getStudents();
-		List[] visionList = new List[2];
+		List<Person>[] visionList = new List[2];
 
 		List<Person> lowVisionList = new LinkedList<>();
 		List<Person> highVisionList = new LinkedList<>();

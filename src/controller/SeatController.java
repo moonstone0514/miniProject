@@ -12,8 +12,9 @@ public class SeatController {
 	
 	public static Person[][] assignSeatWithMbti() {
 		Person[][] seat = new Person[8][4];
+		Model studentList = Model.getModel();
 
-		List[] visionList = Model.getVision();
+		List[] visionList = studentList.getVision();
 		List<Person> lowVisionList = visionList[0];
 		List<Person> highVisionList = visionList[1];
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import model.domain.Person;
 
 public class Database {
+	
 	private static Person[] students;
 	
 	private Database() {};
@@ -38,4 +39,5 @@ public class Database {
 	public static Map<String, List<String>> getmbti() {
 		return mbtiMap;
 	}
+	
 }
