@@ -4,7 +4,9 @@ import controller.SeatController;
 import model.domain.Person;
 
 public class StartView {
+	
     public static void main(String[] args) {
+    	
         Person[][] seat = SeatController.assignSeatWithMbti();
 
         System.out.println("===== 좌석 배정 결과 =====");
@@ -23,6 +25,7 @@ public class StartView {
 
             System.out.println(); // 한 줄 완성
         }
+        
     }
 
     public static void printPerson(Person p) {
@@ -32,4 +35,5 @@ public class StartView {
             System.out.print("[" + p.getName() + "] ");
         }
     }
+    
 }

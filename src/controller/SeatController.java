@@ -9,6 +9,7 @@ import model.Model;
 import model.domain.*;
 
 public class SeatController {
+	
 	public static Person[][] assignSeatWithMbti() {
 		Person[][] seat = new Person[8][4];
 
@@ -19,8 +20,8 @@ public class SeatController {
 		Collections.shuffle(lowVisionList, new Random());
 		Collections.shuffle(highVisionList, new Random());
 
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < seat.length; i++) {
+			for (int j = 0; j < seat[i].length; j++) {
 				if (lowVisionList.isEmpty() && highVisionList.isEmpty()) {
 					return seat;
 				}
@@ -30,11 +31,12 @@ public class SeatController {
 					continue;
 				}
 				
-				if (lowVisionList.isEmpty()) { // 시력 좋은 사람 배치
-					seat[i][j]=assignHighVsion(seat[i][j-1], highVisionList);
+				//lowVisionList가 있는 경우 시력 안 좋은 사람 배치, 없는 경우 시력 좋은 사람 배치
+				if (lowVisionList.isEmpty()) { 
+					seat[i][j] = assignHighVsion(seat[i][j-1], highVisionList); // 시력 좋은 사람 배치
 					continue;
-				} else { // 시력 안 좋은 사람 배치
-					seat[i][j]=assignLowVsion(seat[i][j-1], lowVisionList);
+				} else { 
+					seat[i][j] = assignLowVsion(seat[i][j-1], lowVisionList); // 시력 안 좋은 사람 배치
 					continue;
 				}
 			}
@@ -43,7 +45,8 @@ public class SeatController {
 	}
 
 	public static Person assignHighVsion(Person p, List<Person> highVisionList) {
-		for (int i = 0; i < highVisionList.size(); i++) {
+		int size = highVisionList.size();
+		for (int i = 0; i < size; i++) {
 			if (checkMbti(p.getMbti(), highVisionList.get(i).getMbti())) {
 				return highVisionList.remove(i);
 			}

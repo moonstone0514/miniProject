@@ -8,6 +8,8 @@ import model.domain.Person;
 
 public class Database {
 	private static Person[] students;
+	
+	private Database() {};
 
 	public static Person[] getStudents() {
 		return students;
