@@ -1,23 +1,48 @@
 
-
-## 👨‍👩‍👧‍👦 팀 소개
-
-**팀명**: 강고김김
-**팀원**: 강한솔, 고태우, 김문석(팀장), 김동민
-
-- **기획 및 설계**: 전원 참여 (주제 선정, 자리 배치 로직, 메서드 구조 설계)
-- **코어 구현**: 고태우, 김문석
-- **서브 구현**: 강한솔, 고태우
-- **README.md 작성**: 강한솔, 고태우
-- **발표**: 고태우
-
-
 # 👀 시력과 MBTI를 고려한 자리 배치 프로그램
 
 우리FISA 클라우드엔지니어링 5기 미니 팀 프로젝트로,  
 학생들의 **시력 정보**와 **MBTI 궁합**을 고려해 랜덤으로 자리를 배치하는 프로그램입니다.
 
+<br>
+
 ---
+## 👥 팀원 소개
+
+<div align="center">
+
+<table width="100%">
+  <tr>
+    <td align="center" width="25%">
+      <a href="https://github.com/kkangsol">
+        <img src="https://github.com/kkangsol.png" width="150" /><br />
+        <sub><b>강한솔</b></sub>
+      </a>
+    </td>
+    <td align="center" width="25%">
+      <a href="https://github.com/kohtaewoo">
+        <img src="https://github.com/kohtaewoo.png" width="150" /><br />
+        <sub><b>고태우</b></sub>
+      </a>
+    </td>
+    <td align="center" width="25%">
+      <a href="https://github.com/kddmmm">
+        <img src="https://github.com/kddmmm.png" width="150" /><br />
+        <sub><b>김동민</b></sub>
+      </a>
+    </td>
+    <td align="center" width="25%">
+      <a href="https://github.com/moonstone0514">
+        <img src="https://github.com/moonstone0514.png" width="150" /><br />
+        <sub><b>김문석</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+</div>
+<br>
+<br>
 
 ## 📌 프로젝트 개요
 
@@ -26,6 +51,7 @@
   - 시력이 좋지 않은 학생 8명을 **앞줄 중앙**에 우선 배치
   - 나머지 학생들은 **MBTI 궁합을 고려**해 랜덤 배치
 - **출력 방식**: Eclipse 콘솔 로그로 좌석 배열 출력
+<br>
 
 ---
 
@@ -36,6 +62,7 @@
 | Java | 전체 로직 구현 및 객체지향 구조 설계 |
 | Maven | 프로젝트 의존성 관리 |
 | Lombok | Getter/Setter 및 생성자 자동 생성 |
+<br>
 
 ---
 
@@ -46,6 +73,7 @@
 - 가장 뒷자리 2명은 시력이 안좋은 학생들 중에서 MBTI 궁합이 좋은 2명 배정
 - 1열 먼저 랜덤 배정 오른쪽으로 MBTI 궁합 검증 후 배치
 - 최종 자리배치 2차원 배열 형태로 출력
+<br>
 
 ---
 
@@ -60,6 +88,7 @@
 - ❌ **최악의 궁합 (빨간색)**: 좌석 배치 시 **피해야 할 조합**
 
 > 궁합 판단은 해당 이미지를 기준으로 하였습니다.
+<br>
 
 ---
 
@@ -68,6 +97,7 @@
 1. Eclipse 또는 IntelliJ에서 프로젝트 클론
 2. `StartView` 클래스 내 `main()` 또는 테스트 메서드 실행
 3. 콘솔을 통해 자리배치 결과 확인
+<br>
 
 ---
 
@@ -99,13 +129,13 @@
 ## 🧠 학습 내용과 적용
 
 이 프로젝트는 우리FISA 클라우드엔지니어링 수업에서 배운 내용을 실제로 구현해보며 실습한 결과물입니다.
-
+<br>
 ### 🔸 static{}
 - 각 Controller의 메서드, Database 생성시 static 사용
 - Database 메모리 공유 가능, 빠른 접근성
 ![alt](./images/static01.png)
 ![alt](./images/static02.png)
-
+<br>
 
 ### 🔸 Lombok
 - Person객체에 NoArgsConstructor, AllArgsConstructor, Setter, Getter 사용
@@ -113,13 +143,13 @@
 
   
 ![alt](./images/lombok.png)
+<br>
 
 ### 🔸 배열
 - 인덱스와 length를 통해 좌석 배치 및 알고리즘 제어
 ![alt](./images/array.png)
+<br>
 
-### 🔸 예외처리
-- catch-try 블록을 통해 좌석이 비었을 경우 에러메세지 출력
 
 ### 🔸 ArrayList
 - 가변적이며 객체 타입만 저장 가능한 List 사용
@@ -129,13 +159,16 @@
 ![alt](./images/list01.png)
   
 ![alt](./images/list02.png)
+<br>
 
 ### 🔸 Git & 협업
 - 팀원 간 역할 분담 및 GitHub 기반 협업
+<br>
 
 ### 🔸 문제 해결 및 로직 설계
 - MBTI 궁합 배치 알고리즘 직접 설계
 
+<br>
 
 ---
 
@@ -155,6 +188,7 @@
 - 향후 HTML/CSS 기반 **좌석 배치도 UI** 구현
   - Spring Boot + Thymeleaf 또는 React 등 사용 예정
   - 반응형 UI 및 실시간 랜덤 재배치 버튼 등 고려
+<br>
 
 ---
 
@@ -166,6 +200,7 @@
 | 사용 기술 | Java, Maven, Lombok |
 | 출력 방식 | 콘솔 로그 (Eclipse) |
 | 향후 방향 | 웹 UI, DB 연동, 유동적 인원 처리 등 |
+<br>
 
 ---
 
