@@ -99,10 +99,26 @@ public class StudentService {
 
     public static void deleteStudent(Scanner sc) {
         System.out.print("삭제할 학생 ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
-        boolean result = ModelDAO.deleteStudent(id);
-        System.out.println("[DELETE] 결과: " + result);
+        String id = sc.nextLine().trim();
+        try{
+            if(id.isEmpty()){
+                System.out.println("이름은 공백일 수 없습니다. 다시 입력해주세요.");
+                return;
+            }
+            int newId = Integer.parseInt(id);
+            boolean result = ModelDAO.deleteStudent(newId);
+            if(result == true){
+                System.out.println(id + "번 학생이 성공적으로 삭제되었습니다!");
+            }else{
+                System.out.println(id + "번 학생은 존재하지 않습니다!");
+            }
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            System.out.println("숫자를 입력해주세요!");
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("알 수 없는 에러가 발생했습니다!");
+        }
     }
 
     public static void printAllStudents() {
