@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Mbtiload {
 
-    private static final Map<String, List<String>> mbtiMap = new HashMap<>();
+    public static final Map<String, List<String>> mbtiMap = new HashMap<>();
 
     static {
         // 16개의 MBTI 테이블 이름

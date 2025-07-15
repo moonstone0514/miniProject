@@ -2,6 +2,9 @@ package view;
 
 import model.ModelDAO;
 import model.domain.Person;
+import model.util.Mbtiload;
+
+import java.util.InputMismatchException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,20 +12,63 @@ import java.util.Scanner;
 public class StudentService {
 
     public static void insertStudent(Scanner sc) {
-        System.out.print("이름: ");
-        String name = sc.nextLine();
+    	try {
+    	    System.out.print("이름: ");
+    	    String name = sc.nextLine().trim();
+    	    // 이름 검증
+    	    if (name.isEmpty()) {
+    	        System.out.println("[ERROR] 이름은 공백일 수 없습니다. 다시 입력해주세요.");
+    	        return;
+    	    }
 
-        System.out.print("MBTI: ");
-        String mbti = sc.nextLine();
+    	    System.out.print("MBTI: ");
+    	    String mbti = sc.nextLine().trim();
+    	    // MBTI 공백 검증
+    	    if (mbti.isEmpty()) {
+    	        System.out.println("[ERROR] MBTI는 공백일 수 없습니다. 다시 입력해주세요.");
+    	        return;
+    	    }
 
-        System.out.print("저시력 여부 (true/false): ");
-        boolean isLowVision = sc.nextBoolean();
-        sc.nextLine(); // 개행 제거
+    	    // MBTI 유효성 검증
+    	    if (!Mbtiload.mbtiMap.containsKey(mbti.toUpperCase())) {
+    	        System.out.println("[ERROR] 유효하지 않은 MBTI입니다. 다시 입력해주세요.");
+    	        return;
+    	    }
 
-        // ID 없이 생성자 사용 (Person에 생성자 필요)
-        Person p = new Person(name, mbti, isLowVision);
-        boolean result = ModelDAO.insertStudent(p);
-        System.out.println("[INSERT] 결과: " + result);
+    	    System.out.print("저시력 여부 (true/false): ");
+    	    boolean isLowVision;
+
+    	    try {
+    	        // boolean 입력 검증
+    	        if (!sc.hasNextBoolean()) {  // true/false 외의 값이 들어오면
+    	            System.out.println("[ERROR] true 또는 false로 입력해 주세요.");
+    	            sc.nextLine(); // 잘못된 입력 제거
+    	            return;
+    	        }
+    	        isLowVision = sc.nextBoolean();
+    	    } catch (InputMismatchException ime) {
+    	        System.out.println("[ERROR] true 또는 false로 입력해 주세요.");
+    	        sc.nextLine(); // 잘못된 입력 제거
+    	        return;
+    	    }
+    	    sc.nextLine(); // 개행 제거
+
+    	    // Person 객체 생성
+    	    Person p = new Person(name, mbti, isLowVision);
+
+    	    try {
+    	        boolean result = ModelDAO.insertStudent(p);
+    	        System.out.println("[INSERT] 결과: " + result);
+    	    } catch (Exception e) {
+    	        System.out.println("[ERROR] 데이터 삽입 중 문제가 발생했습니다.");
+    	        e.printStackTrace();
+    	    }
+
+    	} catch (Exception e) {
+    	    System.out.println("[ERROR] 알 수 없는 오류가 발생했습니다.");
+    	    e.printStackTrace();
+    	}
+
     }
 
     public static void updateStudent(Scanner sc) {
