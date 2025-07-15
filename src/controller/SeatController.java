@@ -4,71 +4,73 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import model.Database;
-import model.Model;
-import model.domain.*;
+import model.ModelDAO;
+import model.domain.Person;
+import model.util.Mbtiload;
 
 public class SeatController {
-	
-	public static Person[][] assignSeatWithMbti() {
-		Person[][] seat = new Person[8][4];
-		Model studentList = Model.getModel();
 
-		List[] visionList = studentList.getVision();
-		List<Person> lowVisionList = visionList[0];
-		List<Person> highVisionList = visionList[1];
+    public static Person[][] assignSeatWithMbti() {
+        Person[][] seat = new Person[8][4];
 
-		Collections.shuffle(lowVisionList, new Random());
-		Collections.shuffle(highVisionList, new Random());
+        // ✅ 시력 기준으로 리스트 분리
+        List<Person> lowVisionList = ModelDAO.getLowVision(true);
+        List<Person> highVisionList = ModelDAO.getLowVision(false);
 
-		for (int i = 0; i < seat.length; i++) {
-			for (int j = 0; j < seat[i].length; j++) {
-				if (lowVisionList.isEmpty() && highVisionList.isEmpty()) {
-					return seat;
-				}
+        Collections.shuffle(lowVisionList, new Random());
+        Collections.shuffle(highVisionList, new Random());
 
-				if (j == 0) { //시력 좋은 사람 배치
-					seat[i][j] = highVisionList.remove(0);
-					continue;
-				}
-				
-				//lowVisionList가 있는 경우 시력 안 좋은 사람 배치, 없는 경우 시력 좋은 사람 배치
-				if (lowVisionList.isEmpty()) { 
-					seat[i][j] = assignHighVsion(seat[i][j-1], highVisionList); // 시력 좋은 사람 배치
-					continue;
-				} else { 
-					seat[i][j] = assignLowVsion(seat[i][j-1], lowVisionList); // 시력 안 좋은 사람 배치
-					continue;
-				}
-			}
-		}
-		return seat;
-	}
+        for (int i = 0; i < seat.length; i++) {
+            for (int j = 0; j < seat[i].length; j++) {
 
-	public static Person assignHighVsion(Person p, List<Person> highVisionList) {
-		int size = highVisionList.size();
-		for (int i = 0; i < size; i++) {
-			if (checkMbti(p.getMbti(), highVisionList.get(i).getMbti())) {
-				return highVisionList.remove(i);
-			}
-		}
-		return highVisionList.remove(0);
-	}
+                if (lowVisionList.isEmpty() && highVisionList.isEmpty()) {
+                    return seat; // 모든 학생 배정 완료
+                }
 
-	public static Person assignLowVsion(Person p, List<Person> lowVisionList) {
-		for (int i = 0; i < lowVisionList.size(); i++) {
-			if (checkMbti(p.getMbti(), lowVisionList.get(i).getMbti())) {
-				return lowVisionList.remove(i);
-			}
-		}
-		return lowVisionList.remove(0);
-	}
+                if (j == 0 && !highVisionList.isEmpty()) {
+                    // ✅ 맨 앞자리는 시력 좋은 사람만 배치
+                    seat[i][j] = highVisionList.remove(0);
+                    continue;
+                }
 
-	public static boolean checkMbti(String a, String b) {
-		return Database.getMbti().getOrDefault(a, Collections.emptyList()).contains(b);
-	}
-	// 배열: 8행 4열
-	// 시력 안 좋은 사람 먼저 배정
-	// 시력 안 좋은 사람 없으면 좋은 사람 배정
-	// 단 맨 끝 자리는 무조건 시력 좋은 사람만 배정 + 맨 끝에 앉았던 사람은 제외
+                // lowVisionList가 있는 경우 시력 안 좋은 사람 배치
+                if (!lowVisionList.isEmpty()) {
+                    seat[i][j] = assignLowVision(seat[i][j - 1], lowVisionList);
+                } else if (!highVisionList.isEmpty()) {
+                    // lowVisionList가 비어있는 경우 시력 좋은 사람 배치
+                    seat[i][j] = assignHighVision(seat[i][j - 1], highVisionList);
+                }
+            }
+        }
+        return seat;
+    }
+
+    public static Person assignHighVision(Person prev, List<Person> highVisionList) {
+        for (int i = 0; i < highVisionList.size(); i++) {
+            if (checkMbti(prev.getMbti(), highVisionList.get(i).getMbti())) {
+                return highVisionList.remove(i);
+            }
+        }
+        return highVisionList.remove(0); // 매칭 없으면 그냥 아무나 배정
+    }
+
+    public static Person assignLowVision(Person prev, List<Person> lowVisionList) {
+        for (int i = 0; i < lowVisionList.size(); i++) {
+            if (checkMbti(prev.getMbti(), lowVisionList.get(i).getMbti())) {
+                return lowVisionList.remove(i);
+            }
+        }
+        return lowVisionList.remove(0); // 매칭 없으면 그냥 아무나 배정
+    }
+
+    public static boolean checkMbti(String a, String b) {
+        return Mbtiload.getMbtiMap().getOrDefault(a, Collections.emptyList()).contains(b);
+    }
+
+    // 설명:
+    // - 8행 4열 자리 구성
+    // - 맨 앞자리는 시력 좋은 사람만 배치
+    // - 나머지 자리는 시력 안 좋은 사람 우선 배치
+    // - 없으면 시력 좋은 사람 배치
+    // - MBTI 궁합 고려한 짝 배치
 }

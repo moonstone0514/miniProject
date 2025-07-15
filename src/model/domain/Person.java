@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 
 public class Person {
-	
+	private int id;
     private String name;
     private String mbti;
     private boolean isLowVision;
