@@ -48,15 +48,17 @@ public class ModelDAO {
         PreparedStatement pstmt = null;
         try {
             conn = DBUtil.getConnection();
-            // ✅ 오타 수정: intsert → insert
-            pstmt = conn.prepareStatement("INSERT INTO student VALUES (?, ?, ?, ?)");
-            pstmt.setInt(1, person.getId());
-            pstmt.setString(2, person.getName());
-            pstmt.setString(3, person.getMbti());
-            pstmt.setBoolean(4, person.isLowVision());
-            return pstmt.executeUpdate() == 1; // ✅ 실행문 추가
+
+            // id는 생략하고 name, mbti, isLowVision만 삽입
+            String sql = "INSERT INTO student (name, mbti, isLowVision) VALUES (?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, person.getName());
+            pstmt.setString(2, person.getMbti());
+            pstmt.setBoolean(3, person.isLowVision());
+
+            return pstmt.executeUpdate() == 1;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // 예외 출력 유지
         } finally {
             DBUtil.close(conn, pstmt);
         }
@@ -68,10 +70,12 @@ public class ModelDAO {
         PreparedStatement pstmt = null;
         try {
             conn = DBUtil.getConnection();
-            pstmt = conn.prepareStatement("UPDATE student SET isLowVision = ? WHERE id = ?");
+            String sql = "UPDATE student SET isLowVision = ? WHERE id = ?";
+            pstmt = conn.prepareStatement(sql);
             pstmt.setBoolean(1, isLowVision);
             pstmt.setInt(2, id);
-            return pstmt.executeUpdate() == 1; // ✅ 실행문 추가
+
+            return pstmt.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
