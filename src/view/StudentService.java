@@ -77,7 +77,8 @@ public class StudentService {
             String idString = sc.nextLine();
             if(idString.isEmpty()) throw new NoSuchElementException();
             int id = Integer.parseInt(idString);
-
+            
+            
             System.out.println("1. 시력 정보 수정");
             System.out.println("2. MBTI 수정");
             System.out.print("선택: ");
@@ -97,6 +98,10 @@ public class StudentService {
             } else if (option == 2) {
                 System.out.print("새 MBTI: ");
                 String mbti = sc.nextLine();
+                if (!Mbtiload.mbtiMap.containsKey(mbti.toUpperCase())) {
+                   System.out.println("[ERROR] 유효하지 않은 MBTI입니다. 다시 입력해주세요.");
+                   return;
+               }
                 if(mbti.isEmpty()) throw new NoSuchElementException();
                 boolean result = ModelDAO.updateMbtiStudent(id, mbti);
                 System.out.println("[UPDATE] MBTI 수정 결과: " + result);
