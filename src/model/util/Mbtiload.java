@@ -36,7 +36,7 @@ public class Mbtiload {
             System.out.println("[MBTI 매칭 정보 로딩 완료]");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } 
     }
 
     // ✅ 외부에서 MBTI Map을 가져올 수 있도록 public static 메서드 추가

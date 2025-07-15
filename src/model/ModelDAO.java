@@ -43,7 +43,7 @@ public class ModelDAO {
         return all;
     }
 
-    public static boolean insertStudent(Person person) {
+    public static boolean insertStudent(Person person) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -56,12 +56,18 @@ public class ModelDAO {
             pstmt.setString(2, person.getMbti());
             pstmt.setBoolean(3, person.isLowVision());
 
-            return pstmt.executeUpdate() == 1;
+            int result = pstmt.executeUpdate();
+            if(result == 1) {
+            	return true;
+            }      
+            
         } catch (SQLException e) {
             e.printStackTrace(); // 예외 출력 유지
+            throw e;
         } finally {
             DBUtil.close(conn, pstmt);
         }
+        
         return false;
     }
 
@@ -132,16 +138,19 @@ public class ModelDAO {
     public static boolean deleteStudent(int id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
+        
         try {
             conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement("DELETE FROM student WHERE id = ?");
             pstmt.setInt(1, id);
             return pstmt.executeUpdate() == 1; // ✅ 실행문 추가
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(conn, pstmt);
         }
+        
         return false;
     }
 
