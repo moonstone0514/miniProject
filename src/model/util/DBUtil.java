@@ -32,18 +32,17 @@ public class DBUtil {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 	
 	public static Connection getConnection() throws SQLException {
-		//
 		
-		return  DriverManager.getConnection(dbInfo.getProperty("jdbc.url"),dbInfo.getProperty("jdbc.id") ,dbInfo.getProperty("jdbc.pw") );
+		return  DriverManager.getConnection(
+				dbInfo.getProperty("jdbc.url"),
+				dbInfo.getProperty("jdbc.id") ,
+				dbInfo.getProperty("jdbc.pw") );
 			
 	}
-	//자원 반환 필수 (query)
 	public static void close(Connection conn, Statement stmt, ResultSet rs) {
 		try {
 			if (rs != null) {
@@ -66,9 +65,7 @@ public class DBUtil {
 		}
 	}
 	
-	//자원 반환 필수(Insert, update/ delete)
 	
-	//자원 반환 필수 (query)
 	public static void close(Connection conn, Statement stmt) {
 		try {
 			if (stmt != null) {
