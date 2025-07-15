@@ -5,7 +5,7 @@ import model.domain.Person;
 import model.util.Mbtiload;
 
 import java.util.InputMismatchException;
-
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -72,28 +72,44 @@ public class StudentService {
     }
 
     public static void updateStudent(Scanner sc) {
-        System.out.print("수정할 학생 ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
+        try {
+            System.out.print("수정할 학생 ID: ");
+            String idString = sc.nextLine();
+            if(idString.isEmpty()) throw new NoSuchElementException();
+            int id = Integer.parseInt(idString);
 
-        System.out.println("1. 시력 정보 수정");
-        System.out.println("2. MBTI 수정");
-        System.out.print("선택: ");
-        int option = sc.nextInt();
-        sc.nextLine();
+            System.out.println("1. 시력 정보 수정");
+            System.out.println("2. MBTI 수정");
+            System.out.print("선택: ");
+            String stringOption = sc.nextLine();
+            if(stringOption.isEmpty()) throw new NoSuchElementException();
+            
+            
+            int option = Integer.parseInt(stringOption);
+         
 
-        if (option == 1) {
-            System.out.print("새 시력 상태 (true/false): ");
-            boolean isLowVision = sc.nextBoolean();
-            boolean result = ModelDAO.updateIsLowVisionStudent(id, isLowVision);
-            System.out.println("[UPDATE] 시력 정보 수정 결과: " + result);
-        } else if (option == 2) {
-            System.out.print("새 MBTI: ");
-            String mbti = sc.nextLine();
-            boolean result = ModelDAO.updateMbtiStudent(id, mbti);
-            System.out.println("[UPDATE] MBTI 수정 결과: " + result);
-        } else {
-            System.out.println("⚠️ 잘못된 선택입니다.");
+            if (option == 1) {
+                System.out.print("새 시력 상태 (true/false): ");
+                boolean isLowVision = sc.nextBoolean();
+                sc.nextLine(); // 혹시 남아 있을 개행 제거
+                boolean result = ModelDAO.updateIsLowVisionStudent(id, isLowVision);
+                System.out.println("[UPDATE] 시력 정보 수정 결과: " + result);
+            } else if (option == 2) {
+                System.out.print("새 MBTI: ");
+                String mbti = sc.nextLine();
+                if(mbti.isEmpty()) throw new NoSuchElementException();
+                boolean result = ModelDAO.updateMbtiStudent(id, mbti);
+                System.out.println("[UPDATE] MBTI 수정 결과: " + result);
+            } else {
+                System.out.println("⚠️ 잘못된 선택입니다.");
+            }
+
+        } catch (InputMismatchException e) {
+            System.out.println("⚠️ 입력 형식이 올바르지 않습니다. 숫자나 true/false만 입력해주세요.");
+        } catch (NoSuchElementException e) {
+            System.out.println("⚠️ 공백을 입력하셨습니다.");
+        } catch (Exception e) {
+            System.out.println("⚠️ 알 수 없는 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
@@ -102,7 +118,7 @@ public class StudentService {
         String id = sc.nextLine().trim();
         try{
             if(id.isEmpty()){
-                System.out.println("이름은 공백일 수 없습니다. 다시 입력해주세요.");
+                System.out.println("[ERROR] 이름은 공백일 수 없습니다. 다시 입력해주세요.");
                 return;
             }
             int newId = Integer.parseInt(id);
@@ -110,14 +126,14 @@ public class StudentService {
             if(result == true){
                 System.out.println(id + "번 학생이 성공적으로 삭제되었습니다!");
             }else{
-                System.out.println(id + "번 학생은 존재하지 않습니다!");
+                System.out.println("[ERROR] " + id + "번 학생은 존재하지 않습니다!");
             }
         }catch(NumberFormatException e){
             e.printStackTrace();
-            System.out.println("숫자를 입력해주세요!");
+            System.out.println("[ERROR] 숫자를 입력해주세요!");
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("알 수 없는 에러가 발생했습니다!");
+            System.out.println("[ERROR] 알 수 없는 에러가 발생했습니다!");
         }
     }
 
